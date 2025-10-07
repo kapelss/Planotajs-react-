@@ -1,33 +1,71 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import './App.css';
+import { useState } from 'react';
+import { useEffect } from 'react';
+
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [ievade, setIevade] = useState('');
+  const [uzdevumi, setUzdevumi] = useState([]);
+
+  function pievienotUzdevumu() {
+    if (ievade.trim() !== '') {
+      setUzdevumi([...uzdevumi, ievade]);
+      setIevade('');
+    }
+  }
+
+  function augstak(idx) {
+    if (idx === 0) return;
+    const jaunsUzdevums = [...uzdevumi];
+    [jaunsUzdevums[idx - 1], jaunsUzdevums[idx]] = [jaunsUzdevums[idx], jaunsUzdevums[idx - 1]];
+    setUzdevumi(jaunsUzdevums);
+  }
+
+  function zemak(idx) {
+    if (idx === uzdevumi.length - 1) return;
+    const jaunsUzdevums = [...uzdevumi];
+    [jaunsUzdevums[idx], jaunsUzdevums[idx + 1]] = [jaunsUzdevums[idx + 1], jaunsUzdevums[idx]];
+    setUzdevumi(jaunsUzdevums);
+  }
+  
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <h1>Plānotājs izmantojot React.jsx</h1>
+    <div>
+      <input
+       type="text" 
+       required placeholder='Ieavadi uzdevumu...' 
+       value={ievade} 
+       onChange={e => setIevade(e.target.value)}></input>
+      <button className='pievienot-btn' onClick={pievienotUzdevumu}>Pievienot</button>
+    </div>
+    <div>
+      <ul>
+        {uzdevumi.map((uzd, idx) => (
+          <li key={idx}>
+            <span>{uzd}</span>
+          <span className='button-group'>
+            <button className='move-btn'
+            onClick={() => augstak(idx)}
+            disabled={idx === 0}
+            style={{ marginLeft: '5px' }}
+            >
+              👆
+            </button>
+            <button
+            className='move-btn'
+            onClick={() => zemak(idx)}
+            disabled={idx === uzdevumi.lenght - 1}
+            style={{ marginLeft: '5px' }}
+            >
+              👇
+            </button>
+          </span>
+          </li>
+        ))}
+      </ul>
+    </div>
     </>
   )
 }
