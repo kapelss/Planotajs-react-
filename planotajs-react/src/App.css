@@ -1,4 +1,5 @@
 body {
+  font-family: sans-serif;
   background-image: linear-gradient(to right, blue, lightblue);
   display: flex;
   align-items: center;
@@ -86,4 +87,9 @@ ul li {
   transition: transform 0.1s;
   background-color: #01559e;
 
+}
+
+.move-btn:active {
+  transform: scale(0.96);
+  transition: transform 0.1s;
 }

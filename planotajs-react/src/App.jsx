@@ -7,6 +7,7 @@ function App() {
   const [ievade, setIevade] = useState('');
   const [uzdevumi, setUzdevumi] = useState([]);
 
+  //Pievieno uzdevumu zem ievades loga
   function pievienotUzdevumu() {
     if (ievade.trim() !== '') {
       setUzdevumi([...uzdevumi, ievade]);
@@ -14,13 +15,15 @@ function App() {
     }
   }
 
+  // Pārvieto uzdevumu augstāk
   function augstak(idx) {
     if (idx === 0) return;
     const jaunsUzdevums = [...uzdevumi];
     [jaunsUzdevums[idx - 1], jaunsUzdevums[idx]] = [jaunsUzdevums[idx], jaunsUzdevums[idx - 1]];
     setUzdevumi(jaunsUzdevums);
   }
-
+  
+  //Pārvieto uzdevumu zemāk
   function zemak(idx) {
     if (idx === uzdevumi.length - 1) return;
     const jaunsUzdevums = [...uzdevumi];
@@ -28,17 +31,17 @@ function App() {
     setUzdevumi(jaunsUzdevums);
   }
   
-
+  // Renderē HTML elementus lapā
   return (
     <>
-    <h1>Plānotājs izmantojot React.jsx</h1>
+    <h1>Plānotājs izmantojot React.jsx</h1> 
     <div>
       <input
        type="text" 
        required placeholder='Ieavadi uzdevumu...' 
-       value={ievade} 
+       value={ievade}
        onChange={e => setIevade(e.target.value)}></input>
-      <button className='pievienot-btn' onClick={pievienotUzdevumu}>Pievienot</button>
+      <button className='pievienot-btn' onClick={pievienotUzdevumu}>Pievienot</button> 
     </div>
     <div>
       <ul>
